@@ -6,18 +6,29 @@ It's meant to be used with [metalsmith-collections](https://github.com/segmentio
 
 ## setup
 
-[Metalsmith](http://www.metalsmith.io/) is pluggable static site generator. All of the logic in Metalsmith is handled by plugins.
-
-`metalsmith-pager` is a metalsmith plugin that allows to paginate collections of file; it can be installed via NPM:
+[Metalsmith](http://www.metalsmith.io/) is pluggable static site generator. All of the logic in Metalsmith is handled by plugins. `metalsmith-pager` is a metalsmith plugin that allows to paginate collections of file; it can be installed via NPM:
 
 ```
 npm i -s metalsmith-pager
 ```
 
-## demo
+Usage in the Metalsmith API:
 
-Take a look at the file build-collection-pagination.js to have a demo of the correct usage.
-The results are available under `sample/dist-collection-pagination` folder.
+```
+var paginate = require('metalsmith-pager');
+
+var build = Metalsmith(__dirname)
+.use(paginate({
+    collection: 'MYCOLLECTION',
+    elementsPerPage: 5,
+    pagePattern: 'pages/:PAGE/index.html',
+    index: 'index.html',
+    paginationTemplatePath: '../layouts/partials/blogPagination.html',
+    layoutName: 'default.html'
+  }))
+```
+
+You will need to use the [metalsmith-in-place](https://github.com/superwolff/metalsmith-in-place) plugin to transform your template into HTML. Take a look at [`build-collection-pagination.js`](https://github.com/brunoscopelliti/metalsmith-pager/blob/master/build-collection-pagination.js) to have a demo of the correct usage. The results are available under [`sample/dist-collection-pagination`](https://github.com/brunoscopelliti/metalsmith-pager/tree/master/sample/dist-collection-pagination) folder.
 
 ## results
 
@@ -103,3 +114,5 @@ layoutName
 ---
 The name of the layout that should be used to create the page.
 ```
+
+If you need to reverse the collection, use the `sortBy` and `reverse` options that come as a part of `metalsmith-collections`.
