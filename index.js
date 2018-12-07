@@ -74,6 +74,7 @@ exports = module.exports = function pager(options){
       files[el.path].pages = all;
       files[el.path].pagination.prev = i > 0 ? all[i-1].path : null;
       files[el.path].pagination.next = i < all.length-1 ? all[i+1].path : null;
+      files[el.path].pagination.totalPages = (groupedPosts.length > elementsPerPage) ? Math.ceil(groupedPosts.length / elementsPerPage) : 1;
     });
 
     done();
